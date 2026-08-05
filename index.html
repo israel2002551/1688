@@ -1137,7 +1137,7 @@
         <button type="submit">Open 1688</button>
       </form>
       <div class="header-actions">
-        <button class="icon-btn" type="button" title="Messages" aria-label="Messages">?</button>
+        <button class="icon-btn" id="ordersButton" type="button" title="Orders" aria-label="Orders">O</button>
         <button class="icon-btn" id="cartButton" type="button" title="Cart" aria-label="Cart">
           C
           <span class="cart-count" id="cartCount">0</span>
@@ -2000,6 +2000,10 @@
     document.querySelector("#cartButton").addEventListener("click", () => {
       cartDrawer.classList.toggle("open");
       renderCart();
+    });
+
+    document.querySelector("#ordersButton").addEventListener("click", () => {
+      document.querySelector("#workflow").scrollIntoView({ behavior: "smooth" });
     });
 
     document.querySelector("#cartClose").addEventListener("click", () => {
