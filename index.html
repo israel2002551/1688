@@ -527,7 +527,7 @@
 
     .card-actions {
       display: grid;
-      grid-template-columns: 1fr 42px;
+      grid-template-columns: 1fr 1fr 42px;
       gap: 8px;
       margin-top: 14px;
     }
@@ -549,6 +549,169 @@
       border: 1px solid var(--line);
       background: #fff;
       color: #555;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: #2f3137;
+      background: #fff;
+      font-weight: 800;
+    }
+
+    .add-product-panel {
+      padding: 20px;
+    }
+
+    .add-product-form {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .add-product-form label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .add-product-form input,
+    .add-product-form select {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 11px;
+      color: var(--ink);
+      background: #fff;
+      outline: 0;
+    }
+
+    .add-product-form .wide {
+      grid-column: span 2;
+    }
+
+    .add-product-form button {
+      min-height: 44px;
+      align-self: end;
+      border-radius: 8px;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 86px;
+      right: 18px;
+      z-index: 35;
+      width: min(420px, calc(100% - 36px));
+      max-height: calc(100vh - 110px);
+      overflow: auto;
+      padding: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      transform: translateY(-10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: 180ms ease;
+    }
+
+    .cart-drawer.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .cart-head h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .cart-close {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .cart-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 12px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .cart-item img {
+      aspect-ratio: 1 / 1;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 7px;
+      background: #eceff2;
+    }
+
+    .cart-item strong {
+      display: block;
+      line-height: 1.35;
+    }
+
+    .cart-item small {
+      display: block;
+      margin: 4px 0 8px;
+      color: var(--muted);
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cart-item-actions a,
+    .cart-item-actions button {
+      min-height: 32px;
+      padding: 0 10px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .cart-item-actions a {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #ffd8bf;
+      color: var(--brand-dark);
+      background: #fff7f1;
+    }
+
+    .cart-item-actions button {
+      border: 1px solid var(--line);
+      background: #fff;
+      cursor: pointer;
     }
 
     .supplier-grid,
@@ -670,6 +833,10 @@
       .process-grid {
         grid-template-columns: 1fr;
       }
+
+      .add-product-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 720px) {
@@ -727,6 +894,16 @@
       .cta {
         grid-template-columns: 1fr;
       }
+
+      .add-product-form,
+      .add-product-form .wide {
+        grid-template-columns: 1fr;
+        grid-column: span 1;
+      }
+
+      .cart-drawer {
+        top: 14px;
+      }
     }
   </style>
 </head>
@@ -737,6 +914,7 @@
       <nav aria-label="Utility navigation">
         <a href="#suppliers">Verified suppliers</a>
         <a href="#process">Buyer protection</a>
+        <a href="#add-product">Add product</a>
         <a href="#quote">Request a quote</a>
       </nav>
     </div>
@@ -759,7 +937,7 @@
       </form>
       <div class="header-actions">
         <button class="icon-btn" type="button" title="Messages" aria-label="Messages">?</button>
-        <button class="icon-btn" type="button" title="Cart" aria-label="Cart">
+        <button class="icon-btn" id="cartButton" type="button" title="Cart" aria-label="Cart">
           C
           <span class="cart-count" id="cartCount">0</span>
         </button>
@@ -828,7 +1006,7 @@
         <div class="section-head">
           <div>
             <h2>Selected Goods</h2>
-            <p>Curated products with practical wholesale details, supplier signals, and quick actions for repeat buying.</p>
+            <p>1688 product cards stay in the catalogue, and buyers can add new product links and images below.</p>
           </div>
           <div class="tabs" id="tabs" aria-label="Product filters">
             <button class="tab active" data-category="all" type="button">All</button>
@@ -839,6 +1017,51 @@
           </div>
         </div>
         <div class="product-grid" id="productGrid"></div>
+      </div>
+    </section>
+
+    <section id="add-product">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Add a 1688 Product</h2>
+            <p>Paste any 1688 product link, add the image URL, and the item will appear in the catalogue and cart.</p>
+          </div>
+        </div>
+        <div class="panel add-product-panel">
+          <form class="add-product-form" id="addProductForm">
+            <label class="wide">Product title
+              <input name="title" placeholder="Example: Factory cotton tote bag" required>
+            </label>
+            <label class="wide">1688 product link
+              <input name="url" type="url" placeholder="https://detail.1688.com/offer/..." required>
+            </label>
+            <label class="wide">Image URL
+              <input name="image" type="url" placeholder="https://cbu01.alicdn.com/..." required>
+            </label>
+            <label>Category
+              <select name="category">
+                <option>Fashion</option>
+                <option>Electronics</option>
+                <option>Home</option>
+                <option>Beauty</option>
+                <option>Industrial</option>
+                <option>Packaging</option>
+                <option>Outdoor</option>
+              </select>
+            </label>
+            <label>Price
+              <input name="price" placeholder="CNY 18">
+            </label>
+            <label>MOQ
+              <input name="moq" placeholder="MOQ 20 pcs">
+            </label>
+            <label>Supplier
+              <input name="supplier" placeholder="1688 supplier">
+            </label>
+            <button class="primary-btn" type="submit">Add to Cart</button>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -913,8 +1136,16 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Cart" aria-live="polite">
+    <div class="cart-head">
+      <h2>Cart</h2>
+      <button class="cart-close" id="cartClose" type="button" aria-label="Close cart">X</button>
+    </div>
+    <div class="cart-list" id="cartList"></div>
+  </aside>
+
   <script>
-    const products = [
+    let products = [
       {
         title: "Oversized cotton tee for private-label streetwear drops",
         category: "Fashion",
@@ -992,7 +1223,43 @@
     const productGrid = document.querySelector("#productGrid");
     const toast = document.querySelector("#toast");
     const cartCount = document.querySelector("#cartCount");
-    let cart = 0;
+    const cartDrawer = document.querySelector("#cartDrawer");
+    const cartList = document.querySelector("#cartList");
+    const customProductsKey = "custom1688Products";
+    const cartKey = "cart1688Products";
+    const seedProducts = products.map((product, index) => ({
+      ...product,
+      id: `seed-${index}`,
+      url: "https://www.1688.com/"
+    }));
+    let customProducts = loadFromStorage(customProductsKey, []);
+    let cart = loadFromStorage(cartKey, []);
+    products = [...seedProducts, ...customProducts];
+
+    function loadFromStorage(key, fallback) {
+      try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function saveToStorage(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function productById(id) {
+      return products.find((product) => product.id === id);
+    }
 
     function showToast(message) {
       toast.textContent = message;
@@ -1011,15 +1278,16 @@
 
       productGrid.innerHTML = filtered.map((product) => `
         <article class="product-card">
-          <div class="product-image"><img src="${product.image}" alt="${product.title}"></div>
+          <div class="product-image"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}"></div>
           <div class="product-body">
-            <div class="tag-row">${product.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}</div>
-            <div class="product-title">${product.title}</div>
-            <div class="price-row"><span class="price">${product.price}</span><span class="moq">${product.moq}</span></div>
-            <div class="supplier">${product.supplier}</div>
+            <div class="tag-row">${product.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+            <div class="product-title">${escapeHtml(product.title)}</div>
+            <div class="price-row"><span class="price">${escapeHtml(product.price)}</span><span class="moq">${escapeHtml(product.moq)}</span></div>
+            <div class="supplier">${escapeHtml(product.supplier)}</div>
             <div class="card-actions">
-              <button class="outline-btn" type="button" data-action="quote" data-title="${product.title}">Ask Quote</button>
-              <button class="save-btn" type="button" data-action="save" aria-label="Save ${product.title}">+</button>
+              <button class="outline-btn" type="button" data-action="quote" data-id="${escapeHtml(product.id)}">Ask Quote</button>
+              <a class="link-btn" href="${escapeHtml(product.url)}" target="_blank" rel="noopener">Open Link</a>
+              <button class="save-btn" type="button" data-action="save" data-id="${escapeHtml(product.id)}" aria-label="Add ${escapeHtml(product.title)} to cart">+</button>
             </div>
           </div>
         </article>
@@ -1035,6 +1303,49 @@
         button.classList.toggle("active", button.dataset.category === category);
       });
       renderProducts(category, document.querySelector("#searchInput").value);
+    }
+
+    function updateCartCount() {
+      cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+    }
+
+    function renderCart() {
+      if (!cart.length) {
+        cartList.innerHTML = `<div class="buyer-card"><strong>Your cart is empty</strong><p>Add a 1688 product card or paste a new product link.</p></div>`;
+        updateCartCount();
+        return;
+      }
+
+      cartList.innerHTML = cart.map((item) => {
+        const product = productById(item.id);
+        if (!product) return "";
+        return `
+          <article class="cart-item">
+            <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}">
+            <div>
+              <strong>${escapeHtml(product.title)}</strong>
+              <small>${escapeHtml(product.price)} - ${escapeHtml(product.moq)} - Qty ${item.quantity}</small>
+              <div class="cart-item-actions">
+                <a href="${escapeHtml(product.url)}" target="_blank" rel="noopener">Open link</a>
+                <button type="button" data-action="remove-cart" data-id="${escapeHtml(item.id)}">Remove</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+      updateCartCount();
+    }
+
+    function addToCart(productId) {
+      const existing = cart.find((item) => item.id === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ id: productId, quantity: 1 });
+      }
+      saveToStorage(cartKey, cart);
+      renderCart();
+      showToast("Product added to cart");
     }
 
     document.querySelector("#tabs").addEventListener("click", (event) => {
@@ -1058,15 +1369,57 @@
       const button = event.target.closest("button[data-action]");
       if (!button) return;
       if (button.dataset.action === "save") {
-        cart += 1;
-        cartCount.textContent = cart;
-        showToast("Product added to shortlist");
+        addToCart(button.dataset.id);
       }
       if (button.dataset.action === "quote") {
-        document.querySelector("textarea[name='request']").value = `Please send price, MOQ, lead time, and sample options for: ${button.dataset.title}`;
+        const product = productById(button.dataset.id);
+        document.querySelector("textarea[name='request']").value = `Please send price, MOQ, lead time, and sample options for: ${product.title} ${product.url}`;
         document.querySelector("#quote").scrollIntoView({ behavior: "smooth" });
         showToast("Quote request prepared");
       }
+    });
+
+    document.querySelector("#addProductForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      const product = {
+        id: `custom-${Date.now()}`,
+        title: formData.get("title").trim(),
+        category: formData.get("category"),
+        price: formData.get("price").trim() || "Price on request",
+        moq: formData.get("moq").trim() || "MOQ on request",
+        supplier: formData.get("supplier").trim() || "1688 supplier",
+        tags: ["Added link", "Buyer item"],
+        image: formData.get("image").trim(),
+        url: formData.get("url").trim()
+      };
+
+      customProducts.unshift(product);
+      products = [...seedProducts, ...customProducts];
+      saveToStorage(customProductsKey, customProducts);
+      form.reset();
+      setActiveCategory("all");
+      addToCart(product.id);
+      document.querySelector("#products").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.querySelector("#cartButton").addEventListener("click", () => {
+      cartDrawer.classList.toggle("open");
+      renderCart();
+    });
+
+    document.querySelector("#cartClose").addEventListener("click", () => {
+      cartDrawer.classList.remove("open");
+    });
+
+    cartList.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-action='remove-cart']");
+      if (!button) return;
+      cart = cart.filter((item) => item.id !== button.dataset.id);
+      saveToStorage(cartKey, cart);
+      renderCart();
+      showToast("Product removed from cart");
     });
 
     document.querySelector("#quoteForm").addEventListener("submit", (event) => {
@@ -1076,6 +1429,7 @@
     });
 
     renderProducts();
+    renderCart();
   </script>
 </body>
 </html>

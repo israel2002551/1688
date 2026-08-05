@@ -14,4 +14,6 @@ npx serve .
 
 ## Edit
 
-Product data is in the `products` array near the bottom of `index.html`. The page includes category filtering, search, quote request prefilling, and shortlist count behavior.
+Product data is in the `products` array near the bottom of `index.html`. The page includes category filtering, search, quote request prefilling, a cart drawer, and a form where users can add new 1688 products by pasting a product link plus image URL.
+
+User-added products and cart items are saved in browser `localStorage`, so they remain after a page refresh on the same device.
