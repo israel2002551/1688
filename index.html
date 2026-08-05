@@ -1115,7 +1115,6 @@
         <a href="#products">Browse 1688</a>
         <a href="#add-product">Submit URL</a>
         <a href="#process">How it works</a>
-        <a href="#workflow">Orders</a>
         <a href="#quote">Order help</a>
       </nav>
     </div>
@@ -1138,7 +1137,6 @@
         <button type="submit">Open 1688</button>
       </form>
       <div class="header-actions">
-        <button class="icon-btn" id="ordersButton" type="button" title="Orders" aria-label="Orders">O</button>
         <button class="icon-btn" id="cartButton" type="button" title="Cart" aria-label="Cart">
           C
           <span class="cart-count" id="cartCount">0</span>
@@ -1295,36 +1293,6 @@
             </label>
             <button class="primary-btn" type="submit">Add to Order Cart</button>
           </form>
-        </div>
-      </div>
-    </section>
-
-    <section id="workflow">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Supabase Order Workflow</h2>
-            <p>Send new order requests through Supabase, notify Telegram securely, and track each order from submitted to delivered.</p>
-          </div>
-        </div>
-        <div class="panel workflow-panel">
-          <form class="settings-grid" id="supabaseSettingsForm">
-            <label>Supabase URL
-              <input name="supabaseUrl" type="url" placeholder="https://project-ref.supabase.co">
-            </label>
-            <label>Supabase anon key
-              <input name="anonKey" type="password" placeholder="eyJhbGciOi...">
-            </label>
-            <label>Admin PIN
-              <input name="adminPin" type="password" placeholder="Set as ADMIN_PIN secret">
-            </label>
-            <button class="primary-btn" type="submit" style="border-radius:8px;min-height:44px">Save Supabase Settings</button>
-          </form>
-          <div class="tool-actions">
-            <button class="outline-btn" id="loadOrdersButton" type="button">Load Supabase Orders</button>
-            <span class="tool-note">Telegram bot token and chat ID are stored as Supabase Edge Function secrets, not in this page.</span>
-          </div>
-          <div class="request-list" id="requestList"></div>
         </div>
       </div>
     </section>
@@ -1960,6 +1928,7 @@
     }
 
     function renderRequests() {
+      if (!requestList) return;
       const requests = loadFromStorage(orderRequestsKey, []).map(normalizeOrder);
       if (!requests.length) {
         requestList.innerHTML = `<div class="buyer-card"><strong>No order requests yet</strong><p>Submitted requests will appear here with Supabase sync, Telegram status, and workflow controls.</p></div>`;
@@ -2110,10 +2079,6 @@
       renderCart();
     });
 
-    document.querySelector("#ordersButton").addEventListener("click", () => {
-      document.querySelector("#workflow").scrollIntoView({ behavior: "smooth" });
-    });
-
     document.querySelector("#cartClose").addEventListener("click", () => {
       cartDrawer.classList.remove("open");
     });
@@ -2145,74 +2110,83 @@
       showToast("Cart added to order request");
     });
 
-    document.querySelector("#supabaseSettingsForm").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const formData = new FormData(event.currentTarget);
-      saveToStorage(supabaseSettingsKey, {
-        supabaseUrl: formData.get("supabaseUrl").trim(),
-        anonKey: formData.get("anonKey").trim(),
-        adminPin: formData.get("adminPin").trim()
-      });
-      showToast("Supabase settings saved");
-    });
+    const supabaseSettingsForm = document.querySelector("#supabaseSettingsForm");
+    const loadOrdersButton = document.querySelector("#loadOrdersButton");
 
-    document.querySelector("#loadOrdersButton").addEventListener("click", async () => {
-      try {
-        await loadSupabaseOrders();
-        showToast("Supabase orders loaded");
-      } catch (error) {
-        showToast("Could not load Supabase orders");
-      }
-    });
-
-    requestList.addEventListener("change", async (event) => {
-      const select = event.target.closest("select[data-action='status']");
-      if (!select) return;
-      const settings = getSupabaseSettings();
-      try {
-        const data = await callOrderWorkflow("update_status", {
-          id: select.dataset.id,
-          status: select.value,
-          adminPin: settings.adminPin
+    if (supabaseSettingsForm) {
+      supabaseSettingsForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        saveToStorage(supabaseSettingsKey, {
+          supabaseUrl: formData.get("supabaseUrl").trim(),
+          anonKey: formData.get("anonKey").trim(),
+          adminPin: formData.get("adminPin").trim()
         });
-        saveRequestUpdate(select.dataset.id, () => normalizeOrder(data.order));
-        showToast("Supabase order status updated");
-      } catch (error) {
-        saveRequestUpdate(select.dataset.id, (request) => ({ ...request, status: select.value }));
-        showToast("Status updated locally");
-      }
-    });
+        showToast("Supabase settings saved");
+      });
+    }
 
-    requestList.addEventListener("click", async (event) => {
-      const button = event.target.closest("button[data-action]");
-      if (!button) return;
-      const requests = loadFromStorage(orderRequestsKey, []).map(normalizeOrder);
-      const request = requests.find((item) => item.id === button.dataset.id);
-      const settings = getSupabaseSettings();
-
-      if (button.dataset.action === "delete-request") {
+    if (loadOrdersButton) {
+      loadOrdersButton.addEventListener("click", async () => {
         try {
-          await callOrderWorkflow("delete_order", { id: button.dataset.id, adminPin: settings.adminPin });
+          await loadSupabaseOrders();
+          showToast("Supabase orders loaded");
         } catch (error) {
-          // Keep local delete useful even when Supabase is offline or not configured.
+          showToast("Could not load Supabase orders");
         }
-        saveToStorage(orderRequestsKey, requests.filter((item) => item.id !== button.dataset.id));
-        renderRequests();
-        showToast("Order request deleted");
-        return;
-      }
+      });
+    }
 
-      if (button.dataset.action === "resend-telegram" && request) {
+    if (requestList) {
+      requestList.addEventListener("change", async (event) => {
+        const select = event.target.closest("select[data-action='status']");
+        if (!select) return;
+        const settings = getSupabaseSettings();
         try {
-          const data = await callOrderWorkflow("resend_telegram", { id: request.id, adminPin: settings.adminPin });
-          saveRequestUpdate(request.id, () => normalizeOrder(data.order));
-          showToast("Telegram message sent by Supabase");
+          const data = await callOrderWorkflow("update_status", {
+            id: select.dataset.id,
+            status: select.value,
+            adminPin: settings.adminPin
+          });
+          saveRequestUpdate(select.dataset.id, () => normalizeOrder(data.order));
+          showToast("Supabase order status updated");
         } catch (error) {
-          saveRequestUpdate(request.id, (item) => ({ ...item, telegramResult: "failed" }));
-          showToast("Supabase Telegram send failed");
+          saveRequestUpdate(select.dataset.id, (request) => ({ ...request, status: select.value }));
+          showToast("Status updated locally");
         }
-      }
-    });
+      });
+
+      requestList.addEventListener("click", async (event) => {
+        const button = event.target.closest("button[data-action]");
+        if (!button) return;
+        const requests = loadFromStorage(orderRequestsKey, []).map(normalizeOrder);
+        const request = requests.find((item) => item.id === button.dataset.id);
+        const settings = getSupabaseSettings();
+
+        if (button.dataset.action === "delete-request") {
+          try {
+            await callOrderWorkflow("delete_order", { id: button.dataset.id, adminPin: settings.adminPin });
+          } catch (error) {
+            // Keep local delete useful even when Supabase is offline or not configured.
+          }
+          saveToStorage(orderRequestsKey, requests.filter((item) => item.id !== button.dataset.id));
+          renderRequests();
+          showToast("Order request deleted");
+          return;
+        }
+
+        if (button.dataset.action === "resend-telegram" && request) {
+          try {
+            const data = await callOrderWorkflow("resend_telegram", { id: request.id, adminPin: settings.adminPin });
+            saveRequestUpdate(request.id, () => normalizeOrder(data.order));
+            showToast("Telegram message sent by Supabase");
+          } catch (error) {
+            saveRequestUpdate(request.id, (item) => ({ ...item, telegramResult: "failed" }));
+            showToast("Supabase Telegram send failed");
+          }
+        }
+      });
+    }
 
     document.querySelector("#quoteForm").addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -2252,9 +2226,11 @@
     });
 
     const supabaseSettings = getSupabaseSettings();
-    document.querySelector("#supabaseSettingsForm").elements.supabaseUrl.value = supabaseSettings.supabaseUrl || "";
-    document.querySelector("#supabaseSettingsForm").elements.anonKey.value = supabaseSettings.anonKey || "";
-    document.querySelector("#supabaseSettingsForm").elements.adminPin.value = supabaseSettings.adminPin || "";
+    if (supabaseSettingsForm) {
+      supabaseSettingsForm.elements.supabaseUrl.value = supabaseSettings.supabaseUrl || "";
+      supabaseSettingsForm.elements.anonKey.value = supabaseSettings.anonKey || "";
+      supabaseSettingsForm.elements.adminPin.value = supabaseSettings.adminPin || "";
+    }
     renderProducts();
     renderCart();
     renderRequests();
