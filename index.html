@@ -596,6 +596,42 @@
       line-height: 1.5;
     }
 
+    .extract-preview {
+      display: none;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      padding: 16px;
+      margin-bottom: 14px;
+      border: 1px solid #ffd8bf;
+      border-radius: 8px;
+      background: #fffaf6;
+    }
+
+    .extract-preview.show {
+      display: grid;
+    }
+
+    .extract-preview img {
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #eceff2;
+    }
+
+    .extract-preview h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .preview-meta {
+      display: grid;
+      gap: 6px;
+      margin: 10px 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
     .add-product-form {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1064,6 +1100,10 @@
       .order-guide-grid {
         grid-template-columns: 1fr;
       }
+
+      .extract-preview {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -1208,6 +1248,7 @@
             <span class="tool-note">The extractor tries to fill title, image, price, supplier, MOQ, and variants.</span>
           </div>
         </div>
+        <div class="extract-preview" id="extractPreview" aria-live="polite"></div>
         <div class="panel add-product-panel">
           <form class="add-product-form" id="addProductForm">
             <label class="wide">Product name or note
@@ -1542,6 +1583,7 @@
     const cartDrawer = document.querySelector("#cartDrawer");
     const cartList = document.querySelector("#cartList");
     const requestList = document.querySelector("#requestList");
+    const extractPreview = document.querySelector("#extractPreview");
     const customProductsKey = "custom1688Products";
     const cartKey = "cart1688Products";
     const orderRequestsKey = "orderRequests1688";
@@ -1686,6 +1728,32 @@
       if (details.supplier) form.elements.supplier.value = details.supplier;
       if (details.variant) form.elements.variant.value = details.variant;
       if (details.note) form.elements.note.value = details.note;
+    }
+
+    function renderExtractPreview(details) {
+      const title = details.title || "Untitled 1688 product";
+      const image = details.image || "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=700&q=80";
+      const meta = [
+        details.price && `Price: ${details.price}`,
+        details.moq && `MOQ: ${details.moq}`,
+        details.supplier && `Supplier: ${details.supplier}`,
+        details.variant && `Variant: ${details.variant}`,
+        details.url && `URL: ${details.url}`
+      ].filter(Boolean);
+
+      extractPreview.innerHTML = `
+        <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}">
+        <div>
+          <h3>${escapeHtml(title)}</h3>
+          <div class="preview-meta">${meta.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
+          <div class="tool-actions">
+            <button class="primary-btn" id="confirmExtractButton" type="button" style="border-radius:8px;min-height:42px">Add Preview to Cart</button>
+            <button class="outline-btn" id="editExtractButton" type="button">Edit Details Below</button>
+          </div>
+          <p class="tool-note">Review the extracted product before adding it to cart. You can edit the fields below first.</p>
+        </div>
+      `;
+      extractPreview.classList.add("show");
     }
 
     function build1688SearchUrl(query) {
@@ -1853,11 +1921,26 @@
           ? await callProductExtractor({ html: raw })
           : await callProductExtractor({ url: raw });
         fillProductForm(details || {});
+        renderExtractPreview(details || {});
         showToast(details?.title || details?.url ? "Product details extracted by Supabase" : "Only partial details found");
       } catch (error) {
         const details = extractProductDetails(raw);
         fillProductForm(details);
+        renderExtractPreview(details);
         showToast(details.title || details.url ? "Extracted locally as fallback" : "Extraction failed");
+      }
+    });
+
+    extractPreview.addEventListener("click", (event) => {
+      const confirmButton = event.target.closest("#confirmExtractButton");
+      const editButton = event.target.closest("#editExtractButton");
+
+      if (confirmButton) {
+        document.querySelector("#addProductForm").requestSubmit();
+      }
+
+      if (editButton) {
+        document.querySelector("#addProductForm").scrollIntoView({ behavior: "smooth" });
       }
     });
 
@@ -1907,6 +1990,8 @@
       products = [...seedProducts, ...customProducts];
       saveToStorage(customProductsKey, customProducts);
       form.reset();
+      extractPreview.classList.remove("show");
+      extractPreview.innerHTML = "";
       setActiveCategory("all");
       addToCart(product.id, quantity);
       document.querySelector("#products").scrollIntoView({ behavior: "smooth" });

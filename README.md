@@ -20,6 +20,7 @@ The page includes:
 - 1688 access cards for common categories.
 - A real 1688 product example extracted from supplied page code.
 - A smart extractor that can read a pasted 1688 URL through Supabase or copied product-page HTML as fallback.
+- An extraction preview so customers can review product details before adding the item to cart.
 - A product URL submission form for customer-requested products, including quantity, variant, and notes.
 - A cart drawer with links, images, quantities, and remove actions.
 - An order request form for delivery and sourcing help.
