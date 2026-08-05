@@ -4,7 +4,7 @@ A standalone sourcing gateway for 1688. Users can browse 1688 search/category li
 
 ## Run
 
-Open `index.html` directly in a browser.
+Open `index.html` directly in a browser. The page loads `style.css`, `config.js`, and `app.js`.
 
 For a local server:
 
@@ -24,9 +24,7 @@ The page includes:
 - A product URL submission form for customer-requested products, including quantity, variant, and notes.
 - A cart drawer with links, images, quantities, and remove actions.
 - An order request form for delivery and sourcing help.
-- Telegram settings for sending order requests to a bot/chat.
 - Supabase Edge Function support for saving orders and sending Telegram notifications securely.
-- A browser-based order workflow board with statuses from submitted to delivered.
 
 User-added products and cart items are saved in browser `localStorage`, so they remain after a page refresh on the same device. Order requests are sent to Supabase when configured, with local storage as a fallback/cache.
 
@@ -35,7 +33,7 @@ User-added products and cart items are saved in browser `localStorage`, so they 
 This repo is preconfigured for Supabase project `obzhlmzswthnorkiqemh`:
 
 - URL: `https://obzhlmzswthnorkiqemh.supabase.co`
-- The browser uses the public anon key in `index.html`.
+- The browser uses the public anon key in `config.js`.
 
 1. Confirm the Supabase project is active.
 2. Run the migration in `supabase/migrations`.
@@ -52,14 +50,10 @@ supabase functions deploy extract-1688-product --project-ref obzhlmzswthnorkiqem
 supabase secrets set TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN TELEGRAM_CHAT_ID=YOUR_CHAT_ID ADMIN_PIN=YOUR_ADMIN_PIN --project-ref obzhlmzswthnorkiqemh
 ```
 
-5. In the website admin panel, save:
-
-- Supabase URL
-- Supabase anon key
-- Admin PIN
+5. Keep the public Supabase URL and anon key in `config.js`. Keep the admin PIN only in Supabase secrets.
 
 ## Note
 
 This static site cannot access every product on 1688 as a live inventory feed by itself. URL-only product extraction is handled by the `extract-1688-product` Supabase Edge Function, which fetches the 1688 page server-side and parses common fields. If 1688 blocks a request or changes its page structure, users can still paste copied page code for fallback extraction.
 
-Telegram bot token and chat ID should stay only in Supabase secrets. Do not put them in `index.html`.
+Telegram bot token, chat ID, and admin PIN should stay only in Supabase secrets. Do not put them in `index.html`, `config.js`, or `app.js`.
