@@ -1493,7 +1493,7 @@
         moq: "MOQ 1 pair",
         supplier: "Huizhou Shunbuda Shoes Co.",
         tags: ["Real 1688 page", "Ships in 7 days", "Quality Assurance"],
-        image: "https://cbu01.alicdn.com/img/ibank/O1CN01F2H7xo1sZknNofjF3_!!2222382015781-0-cib.jpg",
+        image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=700&q=80",
         url: "https://detail.1688.com/offer/1051231740308.html",
         note: "Extracted from the supplied 1688 detail page. Sizes 35-40, color Black spot."
       },
@@ -1574,7 +1574,7 @@
         moq: "Browse makers",
         supplier: "1688 Find Factory",
         tags: ["Factory sourcing", "Manufacturers"],
-        image: "https://gw.alicdn.com/imgextra/i1/O1CN010tFscj1GlhdCiAqcf_!!6000000000663-2-tps-2152-904.png",
+        image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=700&q=80",
         url: "https://mind.1688.com/1688pc/pc-home/r3Dc8JjQaK4BfAz5xyw7/index.html?wh_pha=true&wh_pid=3650667",
         note: "Added from the supplied 1688 Find Factory page."
       },
@@ -1585,7 +1585,7 @@
         moq: "Factory ranking",
         supplier: "1688 factory channel",
         tags: ["Super factory", "Origin leaders"],
-        image: "https://img.alicdn.com/imgextra/i1/O1CN010tFscj1GlhdCiAqcf_!!6000000000663-2-tps-2152-904.png",
+        image: "https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&fit=crop&w=700&q=80",
         url: "https://mind.1688.com/default/default/TjSf5m47xeXBj33j6NG7/index.html?wh_pha=true&wh_pid=3708552"
       },
       {
@@ -1595,7 +1595,7 @@
         moq: "Latest ranking",
         supplier: "1688 factory rank",
         tags: ["Rankings", "Hot categories"],
-        image: "https://img.alicdn.com/imgextra/i1/O1CN01bBT8pI1LI01e9y5bR_!!6000000001275-2-tps-2152-904.png",
+        image: "https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=700&q=80",
         url: "https://sale.1688.com/factory/bd_hot_category.html?__existtitle__=1&__removesafearea__=1"
       },
       {
@@ -1605,7 +1605,7 @@
         moq: "From 1 item",
         supplier: "1688 custom factory",
         tags: ["Custom design", "Add logo/text"],
-        image: "https://img.alicdn.com/imgextra/i4/O1CN01EhESQl1Wwj163QDXQ_!!6000000002853-2-tps-2152-904.png",
+        image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=700&q=80",
         url: "https://mind.1688.com/find-factory/daily/dcndrtff4/index.html?wh_pha=true&wh_pid=3231437&__pageId__=3231437"
       },
       {
@@ -1615,7 +1615,7 @@
         moq: "Browse industry",
         supplier: "1688 industrial channel",
         tags: ["Industrial goods", "B2B"],
-        image: "https://cbu01.alicdn.com/img/ibank/O1CN01dlRWKi1Bs2pRM3LSq_!!0-0-cib.jpg",
+        image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=700&q=80",
         url: "https://mind.1688.com/1688pc/pc-home/wkjhxWbz6dfhkixKdyrW/index.html?wh_pha=true&wh_pid=3590995",
         note: "Added from the supplied 1688 Industrial Products page."
       },
@@ -1626,7 +1626,7 @@
         moq: "Image/parameter search",
         supplier: "1688 industry AI",
         tags: ["AI finder", "Industrial search"],
-        image: "https://cbu01.alicdn.com/img/ibank/O1CN01dlRWKi1Bs2pRM3LSq_!!0-0-cib.jpg",
+        image: "https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=700&q=80",
         url: "https://industrybot.1688.com/#/pc?from=home-center-card"
       },
       {
@@ -1636,7 +1636,7 @@
         moq: "Business buying",
         supplier: "1688 enterprise procurement",
         tags: ["Enterprise", "Official"],
-        image: "https://img.alicdn.com/imgextra/i2/O1CN018Q7AJK1VqwOoeN9iy_!!6000000002705-2-tps-2152-904.png",
+        image: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=700&q=80",
         url: "https://b.1688.com/"
       },
       {
@@ -1693,6 +1693,24 @@
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+    }
+
+    function fallbackImageFor(title = "1688 product") {
+      const label = String(title).slice(0, 42);
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
+          <rect width="700" height="700" fill="#fff3eb"/>
+          <rect x="46" y="46" width="608" height="608" rx="24" fill="#ffffff" stroke="#ffd8bf" stroke-width="4"/>
+          <circle cx="350" cy="250" r="82" fill="#ff5b00" opacity="0.92"/>
+          <path d="M198 491c56-87 111-130 166-130 46 0 83 26 112 79 25-21 48-31 70-31 36 0 67 27 93 82H198z" fill="#202124" opacity="0.86"/>
+          <text x="350" y="594" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#171717">${escapeHtml(label)}</text>
+        </svg>
+      `;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    function imageAttrs(src, title) {
+      return `src="${escapeHtml(src || fallbackImageFor(title))}" alt="${escapeHtml(title)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${fallbackImageFor(title)}'"`;
     }
 
     function productById(id) {
@@ -1818,7 +1836,7 @@
       ].filter(Boolean);
 
       extractPreview.innerHTML = `
-        <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}">
+        <img ${imageAttrs(image, title)}>
         <div>
           <h3>${escapeHtml(title)}</h3>
           <div class="preview-meta">${meta.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
@@ -1862,7 +1880,7 @@
 
       productGrid.innerHTML = filtered.map((product) => `
         <article class="product-card">
-          <div class="product-image"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}"></div>
+          <div class="product-image"><img ${imageAttrs(product.image, product.title)}></div>
           <div class="product-body">
             <div class="tag-row">${product.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
             <div class="product-title">${escapeHtml(product.title)}</div>
@@ -1906,7 +1924,7 @@
         if (!product) return "";
         return `
           <article class="cart-item">
-            <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}">
+            <img ${imageAttrs(product.image, product.title)}>
             <div>
               <strong>${escapeHtml(product.title)}</strong>
               <small>${escapeHtml(product.price)} - ${escapeHtml(product.moq)} - Qty ${item.quantity}</small>
