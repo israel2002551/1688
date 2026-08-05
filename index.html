@@ -1128,10 +1128,11 @@
         <span>1688 Global</span>
       </a>
       <form class="search" id="searchForm">
-        <select aria-label="Search type">
+        <select id="searchMode" aria-label="Search type">
           <option>1688 Search</option>
           <option>Products</option>
           <option>Factories</option>
+          <option>Industrial</option>
         </select>
         <input id="searchInput" type="search" placeholder="Search 1688: bags, shoes, electronics..." aria-label="Search 1688 products">
         <button type="submit">Open 1688</button>
@@ -1155,6 +1156,7 @@
             <li><button class="active" data-category="all" type="button">Trending wholesale</button></li>
             <li><button data-category="Fashion" type="button">Fashion & apparel</button></li>
             <li><button data-category="Electronics" type="button">Electronics</button></li>
+            <li><button data-category="Factory" type="button">Find factories</button></li>
             <li><button data-category="Home" type="button">Home & living</button></li>
             <li><button data-category="Beauty" type="button">Beauty & personal care</button></li>
             <li><button data-category="Industrial" type="button">Industrial supplies</button></li>
@@ -1198,8 +1200,8 @@
 
     <div class="container strip" aria-label="Platform highlights">
       <div class="strip-item"><span class="strip-icon">1</span><div><strong>Browse 1688</strong><br><span>Open categories and searches</span></div></div>
-      <div class="strip-item"><span class="strip-icon">2</span><div><strong>Submit links</strong><br><span>Paste desired product URLs</span></div></div>
-      <div class="strip-item"><span class="strip-icon">3</span><div><strong>Order support</strong><br><span>We review price, MOQ, and options</span></div></div>
+      <div class="strip-item"><span class="strip-icon">2</span><div><strong>Find factories</strong><br><span>Open 1688 factory channels</span></div></div>
+      <div class="strip-item"><span class="strip-icon">3</span><div><strong>Industrial sourcing</strong><br><span>Access AI and B2B pages</span></div></div>
       <div class="strip-item"><span class="strip-icon">4</span><div><strong>Delivery help</strong><br><span>Shipping and delivery coordination</span></div></div>
     </div>
 
@@ -1208,12 +1210,13 @@
         <div class="section-head">
           <div>
             <h2>1688 Access Links</h2>
-            <p>These cards open useful 1688 searches and categories. Users can add exact product URLs below when they find what they want.</p>
+            <p>These cards open useful 1688 product, factory, and industrial pages. Users can add exact product URLs below when they find what they want.</p>
           </div>
           <div class="tabs" id="tabs" aria-label="Product filters">
             <button class="tab active" data-category="all" type="button">All</button>
             <button class="tab" data-category="Fashion" type="button">Fashion</button>
             <button class="tab" data-category="Electronics" type="button">Electronics</button>
+            <button class="tab" data-category="Factory" type="button">Factory</button>
             <button class="tab" data-category="Home" type="button">Home</button>
             <button class="tab" data-category="Beauty" type="button">Beauty</button>
             <button class="tab" data-category="Industrial" type="button">Industrial</button>
@@ -1264,6 +1267,7 @@
               <select name="category">
                 <option>Fashion</option>
                 <option>Electronics</option>
+                <option>Factory</option>
                 <option>Home</option>
                 <option>Beauty</option>
                 <option>Industrial</option>
@@ -1364,11 +1368,11 @@
         <div class="process-grid">
           <article class="process-card">
             <h3>1. Browse 1688</h3>
-            <p>Use the search bar or category cards to open 1688 product results in a new tab.</p>
+            <p>Use the search bar or access cards to open product results, factory channels, and industrial sourcing pages.</p>
           </article>
           <article class="process-card">
-            <h3>2. Paste Product URLs</h3>
-            <p>Submit exact product links, optional images, quantity notes, and delivery destination.</p>
+            <h3>2. Pick Product or Factory</h3>
+            <p>Submit exact product links, factory pages, images, quantity notes, variants, and delivery destination.</p>
           </article>
           <article class="process-card">
             <h3>3. Get Order Help</h3>
@@ -1564,6 +1568,78 @@
         url: "https://s.1688.com/selloffer/offer_search.htm?keywords=sports%20outdoor"
       },
       {
+        title: "Find factories on 1688",
+        category: "Factory",
+        price: "Factory access",
+        moq: "Browse makers",
+        supplier: "1688 Find Factory",
+        tags: ["Factory sourcing", "Manufacturers"],
+        image: "https://gw.alicdn.com/imgextra/i1/O1CN010tFscj1GlhdCiAqcf_!!6000000000663-2-tps-2152-904.png",
+        url: "https://mind.1688.com/1688pc/pc-home/r3Dc8JjQaK4BfAz5xyw7/index.html?wh_pha=true&wh_pid=3650667",
+        note: "Added from the supplied 1688 Find Factory page."
+      },
+      {
+        title: "Super factories and leading origins",
+        category: "Factory",
+        price: "Open 1688",
+        moq: "Factory ranking",
+        supplier: "1688 factory channel",
+        tags: ["Super factory", "Origin leaders"],
+        image: "https://img.alicdn.com/imgextra/i1/O1CN010tFscj1GlhdCiAqcf_!!6000000000663-2-tps-2152-904.png",
+        url: "https://mind.1688.com/default/default/TjSf5m47xeXBj33j6NG7/index.html?wh_pha=true&wh_pid=3708552"
+      },
+      {
+        title: "Factory ranking and hot categories",
+        category: "Factory",
+        price: "Open 1688",
+        moq: "Latest ranking",
+        supplier: "1688 factory rank",
+        tags: ["Rankings", "Hot categories"],
+        image: "https://img.alicdn.com/imgextra/i1/O1CN01bBT8pI1LI01e9y5bR_!!6000000001275-2-tps-2152-904.png",
+        url: "https://sale.1688.com/factory/bd_hot_category.html?__existtitle__=1&__removesafearea__=1"
+      },
+      {
+        title: "Custom design factory sourcing",
+        category: "Factory",
+        price: "Open 1688",
+        moq: "From 1 item",
+        supplier: "1688 custom factory",
+        tags: ["Custom design", "Add logo/text"],
+        image: "https://img.alicdn.com/imgextra/i4/O1CN01EhESQl1Wwj163QDXQ_!!6000000002853-2-tps-2152-904.png",
+        url: "https://mind.1688.com/find-factory/daily/dcndrtff4/index.html?wh_pha=true&wh_pid=3231437&__pageId__=3231437"
+      },
+      {
+        title: "Industrial products homepage",
+        category: "Industrial",
+        price: "Industrial access",
+        moq: "Browse industry",
+        supplier: "1688 industrial channel",
+        tags: ["Industrial goods", "B2B"],
+        image: "https://cbu01.alicdn.com/img/ibank/O1CN01dlRWKi1Bs2pRM3LSq_!!0-0-cib.jpg",
+        url: "https://mind.1688.com/1688pc/pc-home/wkjhxWbz6dfhkixKdyrW/index.html?wh_pha=true&wh_pid=3590995",
+        note: "Added from the supplied 1688 Industrial Products page."
+      },
+      {
+        title: "AI industrial product finder",
+        category: "Industrial",
+        price: "Open 1688",
+        moq: "Image/parameter search",
+        supplier: "1688 industry AI",
+        tags: ["AI finder", "Industrial search"],
+        image: "https://cbu01.alicdn.com/img/ibank/O1CN01dlRWKi1Bs2pRM3LSq_!!0-0-cib.jpg",
+        url: "https://industrybot.1688.com/#/pc?from=home-center-card"
+      },
+      {
+        title: "Enterprise procurement on 1688",
+        category: "Industrial",
+        price: "Official procurement",
+        moq: "Business buying",
+        supplier: "1688 enterprise procurement",
+        tags: ["Enterprise", "Official"],
+        image: "https://img.alicdn.com/imgextra/i2/O1CN018Q7AJK1VqwOoeN9iy_!!6000000002705-2-tps-2152-904.png",
+        url: "https://b.1688.com/"
+      },
+      {
         title: "Main 1688 homepage",
         category: "all",
         price: "Open 1688",
@@ -1756,8 +1832,16 @@
       extractPreview.classList.add("show");
     }
 
-    function build1688SearchUrl(query) {
+    function build1688SearchUrl(query, mode = "1688 Search") {
       const term = query.trim() || "wholesale";
+      if (mode === "Factories") {
+        return "https://mind.1688.com/1688pc/pc-home/r3Dc8JjQaK4BfAz5xyw7/index.html?wh_pha=true&wh_pid=3650667";
+      }
+      if (mode === "Industrial") {
+        return query.trim()
+          ? `https://s.1688.com/selloffer/offer_search.htm?keywords=${encodeURIComponent(`${term} industrial`)}`
+          : "https://mind.1688.com/1688pc/pc-home/wkjhxWbz6dfhkixKdyrW/index.html?wh_pha=true&wh_pid=3590995";
+      }
       return `https://s.1688.com/selloffer/offer_search.htm?keywords=${encodeURIComponent(term)}`;
     }
 
@@ -1948,7 +2032,8 @@
       event.preventDefault();
       const active = document.querySelector(".tab.active")?.dataset.category || "all";
       const query = document.querySelector("#searchInput").value;
-      window.open(build1688SearchUrl(query), "_blank", "noopener");
+      const mode = document.querySelector("#searchMode").value;
+      window.open(build1688SearchUrl(query, mode), "_blank", "noopener");
       renderProducts(active, query);
       document.querySelector("#products").scrollIntoView({ behavior: "smooth" });
     });

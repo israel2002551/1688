@@ -17,7 +17,7 @@ npx serve .
 The page includes:
 
 - Header search that opens 1688 search results in a new tab.
-- 1688 access cards for common categories.
+- 1688 access cards for product categories, factory sourcing, industrial products, AI industrial search, factory rankings, custom factory work, and enterprise procurement.
 - A real 1688 product example extracted from supplied page code.
 - A smart extractor that can read a pasted 1688 URL through Supabase or copied product-page HTML as fallback.
 - An extraction preview so customers can review product details before adding the item to cart.
