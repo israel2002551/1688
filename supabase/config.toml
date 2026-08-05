@@ -1,0 +1,4 @@
+project_id = "1688-sourcing"
+
+[functions.order-workflow]
+verify_jwt = true

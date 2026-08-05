@@ -24,12 +24,35 @@ The page includes:
 - A cart drawer with links, images, quantities, and remove actions.
 - An order request form for delivery and sourcing help.
 - Telegram settings for sending order requests to a bot/chat.
+- Supabase Edge Function support for saving orders and sending Telegram notifications securely.
 - A browser-based order workflow board with statuses from submitted to delivered.
 
-User-added products, cart items, and submitted order requests are saved in browser `localStorage`, so they remain after a page refresh on the same device.
+User-added products and cart items are saved in browser `localStorage`, so they remain after a page refresh on the same device. Order requests are sent to Supabase when configured, with local storage as a fallback/cache.
+
+## Supabase Setup
+
+1. Create a Supabase project.
+2. Run the migration in `supabase/migrations`.
+3. Deploy the Edge Function:
+
+```bash
+supabase functions deploy order-workflow --project-ref YOUR_PROJECT_REF
+```
+
+4. Set Edge Function secrets:
+
+```bash
+supabase secrets set TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN TELEGRAM_CHAT_ID=YOUR_CHAT_ID ADMIN_PIN=YOUR_ADMIN_PIN --project-ref YOUR_PROJECT_REF
+```
+
+5. In the website admin panel, save:
+
+- Supabase URL
+- Supabase anon key
+- Admin PIN
 
 ## Note
 
 This static site cannot access every product on 1688 as a live inventory feed by itself. The smart extractor works best when a user pastes copied 1688 page code or a product URL.
 
-Telegram bot settings are stored in the browser for this static version. For production, send Telegram messages from a backend or serverless function so your bot token is private.
+Telegram bot token and chat ID should stay only in Supabase secrets. Do not put them in `index.html`.
