@@ -1201,11 +1201,11 @@
         </div>
         <div class="panel tool-panel">
           <strong>Smart 1688 Extractor</strong>
-          <p class="tool-note">Paste a 1688 product URL or copied page HTML. The form can auto-detect offer ID, title, image, price, supplier, and variants when those details are present in the pasted code.</p>
+          <p class="tool-note">Paste a 1688 product URL or copied page HTML. With Supabase configured, URL-only extraction runs server-side; copied page HTML can also be parsed as a fallback.</p>
           <textarea id="pageCodeInput" placeholder="Paste 1688 product URL or page code here"></textarea>
           <div class="tool-actions">
             <button class="outline-btn" id="extractButton" type="button">Extract Product Details</button>
-            <span class="tool-note">URL-only extraction normalizes the 1688 offer link; page-code extraction fills richer fields.</span>
+            <span class="tool-note">The extractor tries to fill title, image, price, supplier, MOQ, and variants.</span>
           </div>
         </div>
         <div class="panel add-product-panel">
@@ -1621,6 +1621,29 @@
       return data;
     }
 
+    async function callProductExtractor(payload = {}) {
+      const settings = getSupabaseSettings();
+      if (!settings.supabaseUrl || !settings.anonKey) {
+        throw new Error("Supabase is not configured");
+      }
+
+      const response = await fetch(`${settings.supabaseUrl.replace(/\/$/, "")}/functions/v1/extract-1688-product`, {
+        method: "POST",
+        headers: {
+          apikey: settings.anonKey,
+          Authorization: `Bearer ${settings.anonKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || "Product extraction failed");
+      }
+      return data.product;
+    }
+
     function normalize1688Url(value) {
       const offerId = value.match(/offer[\/=](\d+)/i)?.[1] || value.match(/offerId["'=:%20]+(\d+)/i)?.[1] || value.match(/"offerId":(\d+)/)?.[1];
       return offerId ? `https://detail.1688.com/offer/${offerId}.html` : value.trim();
@@ -1651,6 +1674,18 @@
         moq: readMatch(text, /"beginAmount":(\d+)/) ? `MOQ ${readMatch(text, /"beginAmount":(\d+)/)}` : "",
         url
       };
+    }
+
+    function fillProductForm(details) {
+      const form = document.querySelector("#addProductForm");
+      if (details.title) form.elements.title.value = details.title;
+      if (details.url) form.elements.url.value = details.url;
+      if (details.image) form.elements.image.value = details.image;
+      if (details.price) form.elements.price.value = details.price;
+      if (details.moq) form.elements.moq.value = details.moq;
+      if (details.supplier) form.elements.supplier.value = details.supplier;
+      if (details.variant) form.elements.variant.value = details.variant;
+      if (details.note) form.elements.note.value = details.note;
     }
 
     function build1688SearchUrl(query) {
@@ -1805,22 +1840,25 @@
       if (button) setActiveCategory(button.dataset.category);
     });
 
-    document.querySelector("#extractButton").addEventListener("click", () => {
+    document.querySelector("#extractButton").addEventListener("click", async () => {
       const raw = document.querySelector("#pageCodeInput").value;
       if (!raw.trim()) {
         showToast("Paste a 1688 URL or page code first");
         return;
       }
-      const details = extractProductDetails(raw);
-      const form = document.querySelector("#addProductForm");
-      if (details.title) form.elements.title.value = details.title;
-      if (details.url) form.elements.url.value = details.url;
-      if (details.image) form.elements.image.value = details.image;
-      if (details.price) form.elements.price.value = details.price;
-      if (details.moq) form.elements.moq.value = details.moq;
-      if (details.supplier) form.elements.supplier.value = details.supplier;
-      if (details.variant) form.elements.variant.value = details.variant;
-      showToast(details.title || details.url ? "Product details extracted" : "Only partial details found");
+      const looksLikeHtml = /<html|window\.context|<title|fullPathImageURI|priceDisplay/i.test(raw);
+
+      try {
+        const details = looksLikeHtml
+          ? await callProductExtractor({ html: raw })
+          : await callProductExtractor({ url: raw });
+        fillProductForm(details || {});
+        showToast(details?.title || details?.url ? "Product details extracted by Supabase" : "Only partial details found");
+      } catch (error) {
+        const details = extractProductDetails(raw);
+        fillProductForm(details);
+        showToast(details.title || details.url ? "Extracted locally as fallback" : "Extraction failed");
+      }
     });
 
     document.querySelector("#searchForm").addEventListener("submit", (event) => {

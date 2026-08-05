@@ -2,3 +2,6 @@ project_id = "1688-sourcing"
 
 [functions.order-workflow]
 verify_jwt = true
+
+[functions.extract-1688-product]
+verify_jwt = true
