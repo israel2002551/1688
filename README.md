@@ -32,19 +32,24 @@ User-added products and cart items are saved in browser `localStorage`, so they 
 
 ## Supabase Setup
 
-1. Create a Supabase project.
+This repo is preconfigured for Supabase project `obzhlmzswthnorkiqemh`:
+
+- URL: `https://obzhlmzswthnorkiqemh.supabase.co`
+- The browser uses the public anon key in `index.html`.
+
+1. Confirm the Supabase project is active.
 2. Run the migration in `supabase/migrations`.
 3. Deploy the Edge Functions:
 
 ```bash
-supabase functions deploy order-workflow --project-ref YOUR_PROJECT_REF
-supabase functions deploy extract-1688-product --project-ref YOUR_PROJECT_REF
+supabase functions deploy order-workflow --project-ref obzhlmzswthnorkiqemh
+supabase functions deploy extract-1688-product --project-ref obzhlmzswthnorkiqemh
 ```
 
 4. Set Edge Function secrets:
 
 ```bash
-supabase secrets set TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN TELEGRAM_CHAT_ID=YOUR_CHAT_ID ADMIN_PIN=YOUR_ADMIN_PIN --project-ref YOUR_PROJECT_REF
+supabase secrets set TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN TELEGRAM_CHAT_ID=YOUR_CHAT_ID ADMIN_PIN=YOUR_ADMIN_PIN --project-ref obzhlmzswthnorkiqemh
 ```
 
 5. In the website admin panel, save:

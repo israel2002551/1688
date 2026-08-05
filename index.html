@@ -1664,6 +1664,11 @@
     const cartKey = "cart1688Products";
     const orderRequestsKey = "orderRequests1688";
     const supabaseSettingsKey = "supabase1688Settings";
+    const defaultSupabaseSettings = {
+      supabaseUrl: "https://obzhlmzswthnorkiqemh.supabase.co",
+      anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9iemhsbXpzd3Robm9ya2lxZW1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMDE2NjgsImV4cCI6MjA4ODY3NzY2OH0.5I4Ln0913h0AH5z4e64QBVx88igcIwEaM0Lz11FqDvU",
+      adminPin: ""
+    };
     const orderStatuses = ["Submitted", "Checking price", "Awaiting payment", "Ordered", "At China warehouse", "Shipped", "Delivered"];
     const seedProducts = products.map((product, index) => ({
       ...product,
@@ -1718,7 +1723,7 @@
     }
 
     function getSupabaseSettings() {
-      return loadFromStorage(supabaseSettingsKey, { supabaseUrl: "", anonKey: "", adminPin: "" });
+      return { ...defaultSupabaseSettings, ...loadFromStorage(supabaseSettingsKey, {}) };
     }
 
     function normalizeOrder(order) {
