@@ -18,7 +18,8 @@ The page includes:
 
 - Header search that opens 1688 search results in a new tab.
 - 1688 access cards for common categories.
-- A product URL submission form for customer-requested products.
+- A real 1688 product example extracted from supplied page code.
+- A product URL submission form for customer-requested products, including quantity, variant, and notes.
 - A cart drawer with links, images, quantities, and remove actions.
 - An order request form for delivery and sourcing help.
 

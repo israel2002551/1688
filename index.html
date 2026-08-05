@@ -721,6 +721,31 @@
       gap: 16px;
     }
 
+    .order-guide-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .order-guide-item {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .order-guide-item strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .order-guide-item span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
     .supplier-card,
     .process-card {
       padding: 20px;
@@ -837,6 +862,10 @@
       .add-product-form {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+
+      .order-guide-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 720px) {
@@ -903,6 +932,10 @@
 
       .cart-drawer {
         top: 14px;
+      }
+
+      .order-guide-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -1032,6 +1065,12 @@
             <p>Paste any 1688 product link. Add an image URL if you have one, then place the item in your order cart.</p>
           </div>
         </div>
+        <div class="order-guide-grid" aria-label="1688 order details checklist">
+          <div class="order-guide-item"><strong>Product URL</strong><span>Exact 1688 product detail link.</span></div>
+          <div class="order-guide-item"><strong>Image</strong><span>Add a product image URL or let the cart use a placeholder.</span></div>
+          <div class="order-guide-item"><strong>Variant</strong><span>Include color, size, model, SKU, or packaging option.</span></div>
+          <div class="order-guide-item"><strong>Delivery</strong><span>Add destination in the request form for shipping support.</span></div>
+        </div>
         <div class="panel add-product-panel">
           <form class="add-product-form" id="addProductForm">
             <label class="wide">Product name or note
@@ -1057,11 +1096,20 @@
             <label>Price
               <input name="price" placeholder="CNY 18">
             </label>
+            <label>Quantity
+              <input name="quantity" type="number" min="1" value="1">
+            </label>
+            <label>Variant
+              <input name="variant" placeholder="Color, size, model">
+            </label>
             <label>MOQ
               <input name="moq" placeholder="MOQ 20 pcs">
             </label>
             <label>Supplier
               <input name="supplier" placeholder="1688 supplier">
+            </label>
+            <label class="wide">Order notes
+              <input name="note" placeholder="Example: black, size 39, confirm shipping cost">
             </label>
             <button class="primary-btn" type="submit">Add to Order Cart</button>
           </form>
@@ -1227,6 +1275,17 @@
 
     const accessProducts = [
       {
+        title: "Sheepskin French-style wedge slip-on shoes",
+        category: "Fashion",
+        price: "CNY 79.00-99.00",
+        moq: "MOQ 1 pair",
+        supplier: "Huizhou Shunbuda Shoes Co.",
+        tags: ["Real 1688 page", "Ships in 7 days", "Quality Assurance"],
+        image: "https://cbu01.alicdn.com/img/ibank/O1CN01F2H7xo1sZknNofjF3_!!2222382015781-0-cib.jpg",
+        url: "https://detail.1688.com/offer/1051231740308.html",
+        note: "Extracted from the supplied 1688 detail page. Sizes 35-40, color Black spot."
+      },
+      {
         title: "Fashion and apparel on 1688",
         category: "Fashion",
         price: "Open 1688",
@@ -1380,6 +1439,7 @@
             <div class="product-title">${escapeHtml(product.title)}</div>
             <div class="price-row"><span class="price">${escapeHtml(product.price)}</span><span class="moq">${escapeHtml(product.moq)}</span></div>
             <div class="supplier">${escapeHtml(product.supplier)}</div>
+            ${product.note ? `<div class="supplier">${escapeHtml(product.note)}</div>` : ""}
             <div class="card-actions">
               <button class="outline-btn" type="button" data-action="quote" data-id="${escapeHtml(product.id)}">Ask Quote</button>
               <a class="link-btn" href="${escapeHtml(product.url)}" target="_blank" rel="noopener">Open Link</a>
@@ -1421,6 +1481,8 @@
             <div>
               <strong>${escapeHtml(product.title)}</strong>
               <small>${escapeHtml(product.price)} - ${escapeHtml(product.moq)} - Qty ${item.quantity}</small>
+              ${product.variant ? `<small>Variant: ${escapeHtml(product.variant)}</small>` : ""}
+              ${product.note ? `<small>Note: ${escapeHtml(product.note)}</small>` : ""}
               <div class="cart-item-actions">
                 <a href="${escapeHtml(product.url)}" target="_blank" rel="noopener">Open link</a>
                 <button type="button" data-action="remove-cart" data-id="${escapeHtml(item.id)}">Remove</button>
@@ -1432,12 +1494,13 @@
       updateCartCount();
     }
 
-    function addToCart(productId) {
+    function addToCart(productId, quantity = 1) {
+      const amount = Math.max(1, Number(quantity) || 1);
       const existing = cart.find((item) => item.id === productId);
       if (existing) {
-        existing.quantity += 1;
+        existing.quantity += amount;
       } else {
-        cart.push({ id: productId, quantity: 1 });
+        cart.push({ id: productId, quantity: amount });
       }
       saveToStorage(cartKey, cart);
       renderCart();
@@ -1481,6 +1544,7 @@
       event.preventDefault();
       const form = event.currentTarget;
       const formData = new FormData(form);
+      const quantity = Math.max(1, Number(formData.get("quantity")) || 1);
       const product = {
         id: `custom-${Date.now()}`,
         title: formData.get("title").trim(),
@@ -1488,7 +1552,9 @@
         price: formData.get("price").trim() || "Price on request",
         moq: formData.get("moq").trim() || "MOQ on request",
         supplier: formData.get("supplier").trim() || "1688 supplier",
-        tags: ["Added link", "Buyer item"],
+        variant: formData.get("variant").trim(),
+        note: formData.get("note").trim(),
+        tags: ["Submitted URL", "Buyer item"],
         image: formData.get("image").trim() || "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=700&q=80",
         url: formData.get("url").trim()
       };
@@ -1498,7 +1564,7 @@
       saveToStorage(customProductsKey, customProducts);
       form.reset();
       setActiveCategory("all");
-      addToCart(product.id);
+      addToCart(product.id, quantity);
       document.querySelector("#products").scrollIntoView({ behavior: "smooth" });
     });
 
@@ -1527,7 +1593,10 @@
       }
       const lines = cart.map((item) => {
         const product = productById(item.id);
-        return product ? `Qty ${item.quantity}: ${product.title} - ${product.url}` : "";
+        if (!product) return "";
+        const variant = product.variant ? ` | Variant: ${product.variant}` : "";
+        const note = product.note ? ` | Note: ${product.note}` : "";
+        return `Qty ${item.quantity}: ${product.title}${variant}${note} - ${product.url}`;
       }).filter(Boolean);
       document.querySelector("textarea[name='request']").value = `I want help ordering and delivering these 1688 products:\n${lines.join("\n")}`;
       cartDrawer.classList.remove("open");
