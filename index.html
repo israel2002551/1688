@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1688 Global Wholesale Marketplace</title>
-  <meta name="description" content="A responsive wholesale marketplace homepage inspired by 1688, with categories, featured suppliers, products, and sourcing tools.">
+  <title>1688 Sourcing & Delivery Help</title>
+  <meta name="description" content="Browse 1688 product links, submit desired product URLs, and build an order cart for sourcing and delivery assistance.">
   <style>
     :root {
       --ink: #171717;
@@ -910,12 +910,12 @@
 <body>
   <div class="topbar">
     <div class="container">
-      <span>Global sourcing made simple</span>
+      <span>1688 sourcing, ordering, and delivery support</span>
       <nav aria-label="Utility navigation">
-        <a href="#suppliers">Verified suppliers</a>
-        <a href="#process">Buyer protection</a>
-        <a href="#add-product">Add product</a>
-        <a href="#quote">Request a quote</a>
+        <a href="#products">Browse 1688</a>
+        <a href="#add-product">Submit URL</a>
+        <a href="#process">How it works</a>
+        <a href="#quote">Order help</a>
       </nav>
     </div>
   </div>
@@ -928,12 +928,12 @@
       </a>
       <form class="search" id="searchForm">
         <select aria-label="Search type">
+          <option>1688 Search</option>
           <option>Products</option>
-          <option>Suppliers</option>
           <option>Factories</option>
         </select>
-        <input id="searchInput" type="search" placeholder="Search bags, electronics, packaging..." aria-label="Search products">
-        <button type="submit">Search</button>
+        <input id="searchInput" type="search" placeholder="Search 1688: bags, shoes, electronics..." aria-label="Search 1688 products">
+        <button type="submit">Open 1688</button>
       </form>
       <div class="header-actions">
         <button class="icon-btn" type="button" title="Messages" aria-label="Messages">?</button>
@@ -964,56 +964,60 @@
 
         <div class="panel hero-main">
           <div>
-            <p class="eyebrow">Factory direct marketplace</p>
-            <h1>Source ready-to-ship goods from verified makers.</h1>
-            <p>Find wholesale products, compare minimum order quantities, and request quotes from factories across key categories.</p>
+            <p class="eyebrow">1688 buying assistant</p>
+            <h1>Find products on 1688. Send us the link. We help you order and deliver.</h1>
+            <p>Use this site as your 1688 access point: browse categories, open product links, add desired items to cart, and submit them for sourcing, payment, shipping, and delivery support.</p>
             <div class="hero-actions">
-              <a class="primary-btn" href="#products">Browse Deals</a>
-              <a class="secondary-btn" href="#quote">Get Sourcing Help</a>
+              <a class="primary-btn" href="#products">Browse 1688 Links</a>
+              <a class="secondary-btn" href="#add-product">Submit Product URL</a>
             </div>
           </div>
           <div class="hero-stats" aria-label="Marketplace statistics">
-            <div class="stat"><strong>28k+</strong><span>factory listings</span></div>
-            <div class="stat"><strong>72h</strong><span>sample dispatch</span></div>
-            <div class="stat"><strong>14</strong><span>top categories</span></div>
+            <div class="stat"><strong>1688</strong><span>source platform</span></div>
+            <div class="stat"><strong>URL</strong><span>based requests</span></div>
+            <div class="stat"><strong>NG</strong><span>delivery support</span></div>
           </div>
         </div>
 
         <aside class="panel buyer-panel" id="quote">
           <div class="buyer-card">
-            <strong>Buyer Desk</strong>
-            <p>Send a short sourcing request and get matched with supplier options.</p>
+            <strong>Order Desk</strong>
+            <p>Submit product URLs and delivery details so your order can be reviewed.</p>
           </div>
           <form class="quote-form" id="quoteForm">
             <input name="name" placeholder="Your name" required>
-            <input name="email" type="email" placeholder="Email address" required>
-            <textarea name="request" rows="4" placeholder="What do you want to source?" required></textarea>
-            <button class="primary-btn" type="submit">Request Quote</button>
+            <input name="contact" placeholder="WhatsApp or email" required>
+            <input name="destination" placeholder="Delivery city/country" required>
+            <textarea name="request" rows="4" placeholder="Paste product URLs or describe what you want to order" required></textarea>
+            <button class="primary-btn" type="submit">Submit Request</button>
           </form>
         </aside>
       </div>
     </section>
 
     <div class="container strip" aria-label="Platform highlights">
-      <div class="strip-item"><span class="strip-icon">V</span><div><strong>Verified makers</strong><br><span>Factory profiles and trade checks</span></div></div>
-      <div class="strip-item"><span class="strip-icon">$</span><div><strong>Clear pricing</strong><br><span>MOQ, unit price, and lead time</span></div></div>
-      <div class="strip-item"><span class="strip-icon">S</span><div><strong>Sample support</strong><br><span>Order samples before bulk buying</span></div></div>
-      <div class="strip-item"><span class="strip-icon">L</span><div><strong>Logistics ready</strong><br><span>Freight and consolidation options</span></div></div>
+      <div class="strip-item"><span class="strip-icon">1</span><div><strong>Browse 1688</strong><br><span>Open categories and searches</span></div></div>
+      <div class="strip-item"><span class="strip-icon">2</span><div><strong>Submit links</strong><br><span>Paste desired product URLs</span></div></div>
+      <div class="strip-item"><span class="strip-icon">3</span><div><strong>Order support</strong><br><span>We review price, MOQ, and options</span></div></div>
+      <div class="strip-item"><span class="strip-icon">4</span><div><strong>Delivery help</strong><br><span>Shipping and delivery coordination</span></div></div>
     </div>
 
     <section id="products">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Selected Goods</h2>
-            <p>1688 product cards stay in the catalogue, and buyers can add new product links and images below.</p>
+            <h2>1688 Access Links</h2>
+            <p>These cards open useful 1688 searches and categories. Users can add exact product URLs below when they find what they want.</p>
           </div>
           <div class="tabs" id="tabs" aria-label="Product filters">
             <button class="tab active" data-category="all" type="button">All</button>
             <button class="tab" data-category="Fashion" type="button">Fashion</button>
             <button class="tab" data-category="Electronics" type="button">Electronics</button>
             <button class="tab" data-category="Home" type="button">Home</button>
+            <button class="tab" data-category="Beauty" type="button">Beauty</button>
+            <button class="tab" data-category="Industrial" type="button">Industrial</button>
             <button class="tab" data-category="Packaging" type="button">Packaging</button>
+            <button class="tab" data-category="Outdoor" type="button">Outdoor</button>
           </div>
         </div>
         <div class="product-grid" id="productGrid"></div>
@@ -1024,20 +1028,20 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Add a 1688 Product</h2>
-            <p>Paste any 1688 product link, add the image URL, and the item will appear in the catalogue and cart.</p>
+            <h2>Submit Desired Product</h2>
+            <p>Paste any 1688 product link. Add an image URL if you have one, then place the item in your order cart.</p>
           </div>
         </div>
         <div class="panel add-product-panel">
           <form class="add-product-form" id="addProductForm">
-            <label class="wide">Product title
+            <label class="wide">Product name or note
               <input name="title" placeholder="Example: Factory cotton tote bag" required>
             </label>
             <label class="wide">1688 product link
               <input name="url" type="url" placeholder="https://detail.1688.com/offer/..." required>
             </label>
-            <label class="wide">Image URL
-              <input name="image" type="url" placeholder="https://cbu01.alicdn.com/..." required>
+            <label class="wide">Image URL, optional
+              <input name="image" type="url" placeholder="https://cbu01.alicdn.com/...">
             </label>
             <label>Category
               <select name="category">
@@ -1059,7 +1063,7 @@
             <label>Supplier
               <input name="supplier" placeholder="1688 supplier">
             </label>
-            <button class="primary-btn" type="submit">Add to Cart</button>
+            <button class="primary-btn" type="submit">Add to Order Cart</button>
           </form>
         </div>
       </div>
@@ -1069,25 +1073,25 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Supplier Programs</h2>
-            <p>Build a shortlist faster with signals that matter before a purchase order is placed.</p>
+            <h2>What We Help With</h2>
+            <p>Your customers browse 1688, then your platform helps turn product links into a real purchase and delivery request.</p>
           </div>
         </div>
         <div class="supplier-grid">
           <article class="supplier-card">
-            <h3>Factory Verified</h3>
-            <p>Profiles highlight production capacity, inspection availability, export experience, and sample readiness.</p>
-            <div class="supplier-meta"><span>Audit ready</span><span>MOQ listed</span><span>Fast samples</span></div>
+            <h3>Product Review</h3>
+            <p>Review product URLs, images, variants, supplier details, MOQ, and estimated item cost before payment.</p>
+            <div class="supplier-meta"><span>URL check</span><span>MOQ review</span><span>Variant notes</span></div>
           </article>
           <article class="supplier-card">
-            <h3>Trade Assurance</h3>
-            <p>Track payment milestones, shipping windows, and buyer documentation in one simple purchase workflow.</p>
-            <div class="supplier-meta"><span>Milestones</span><span>Disputes</span><span>Order records</span></div>
+            <h3>Order Placement</h3>
+            <p>Help customers place orders with 1688 suppliers after confirming price, quantity, color, size, and availability.</p>
+            <div class="supplier-meta"><span>Supplier contact</span><span>Payment help</span><span>Order records</span></div>
           </article>
           <article class="supplier-card">
-            <h3>Consolidated Shipping</h3>
-            <p>Combine smaller orders from multiple suppliers into one shipment to reduce freight friction.</p>
-            <div class="supplier-meta"><span>Air</span><span>Sea</span><span>Warehouse</span></div>
+            <h3>Delivery Support</h3>
+            <p>Coordinate collection, consolidation, shipping, customs steps, and final delivery updates for customers.</p>
+            <div class="supplier-meta"><span>Warehouse</span><span>Freight</span><span>Delivery</span></div>
           </article>
         </div>
       </div>
@@ -1097,22 +1101,22 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>Sourcing Flow</h2>
-            <p>A complete front page should guide visitors from search to quote without making them think too hard.</p>
+            <h2>How It Works</h2>
+            <p>The site is designed around the simple behavior customers already have: find a product, paste a link, request help.</p>
           </div>
         </div>
         <div class="process-grid">
           <article class="process-card">
-            <h3>1. Search</h3>
-            <p>Filter by category, price, supplier strength, and order quantity to discover viable items quickly.</p>
+            <h3>1. Browse 1688</h3>
+            <p>Use the search bar or category cards to open 1688 product results in a new tab.</p>
           </article>
           <article class="process-card">
-            <h3>2. Compare</h3>
-            <p>Review product tags, lead time, factory notes, and sample options before contacting a supplier.</p>
+            <h3>2. Paste Product URLs</h3>
+            <p>Submit exact product links, optional images, quantity notes, and delivery destination.</p>
           </article>
           <article class="process-card">
-            <h3>3. Order</h3>
-            <p>Add products to your shortlist, request quotes, and prepare a consolidated purchase order.</p>
+            <h3>3. Get Order Help</h3>
+            <p>Your platform reviews the request, confirms details, helps place the order, and coordinates delivery.</p>
           </article>
         </div>
       </div>
@@ -1120,17 +1124,17 @@
 
     <div class="container cta">
       <div>
-        <h2>Ready to build a sourcing shortlist?</h2>
-        <p>Use the search, save products, or send a buying request. The page is fully static and ready to extend.</p>
+        <h2>Found something on 1688?</h2>
+        <p>Paste the product URL, add it to cart, and submit an order-help request with delivery details.</p>
       </div>
-      <a class="primary-btn" href="#quote">Start a Request</a>
+      <a class="primary-btn" href="#add-product">Submit Product URL</a>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <span>1688 Global Wholesale Marketplace</span>
-      <span>Products, factories, RFQs, and sourcing support</span>
+      <span>1688 Sourcing & Delivery Help</span>
+      <span>Browse 1688, submit URLs, order with support</span>
     </div>
   </footer>
 
@@ -1142,6 +1146,7 @@
       <button class="cart-close" id="cartClose" type="button" aria-label="Close cart">X</button>
     </div>
     <div class="cart-list" id="cartList"></div>
+    <button class="primary-btn" id="checkoutButton" type="button" style="width:100%;margin-top:14px;border-radius:8px;min-height:42px">Submit Cart for Order Help</button>
   </aside>
 
   <script>
@@ -1220,6 +1225,91 @@
       }
     ];
 
+    const accessProducts = [
+      {
+        title: "Fashion and apparel on 1688",
+        category: "Fashion",
+        price: "Open 1688",
+        moq: "Search clothing",
+        supplier: "1688 category search",
+        tags: ["Women's wear", "Men's wear"],
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80",
+        url: "https://s.1688.com/selloffer/offer_search.htm?keywords=clothing"
+      },
+      {
+        title: "Electronics and accessories on 1688",
+        category: "Electronics",
+        price: "Open 1688",
+        moq: "Search gadgets",
+        supplier: "1688 category search",
+        tags: ["Power banks", "Phone parts"],
+        image: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=700&q=80",
+        url: "https://s.1688.com/selloffer/offer_search.htm?keywords=electronics"
+      },
+      {
+        title: "Home, kitchen, and daily goods on 1688",
+        category: "Home",
+        price: "Open 1688",
+        moq: "Search home goods",
+        supplier: "1688 category search",
+        tags: ["Kitchen", "Homeware"],
+        image: "https://images.unsplash.com/photo-1516594798947-e65505dbb29d?auto=format&fit=crop&w=700&q=80",
+        url: "https://s.1688.com/selloffer/offer_search.htm?keywords=home%20goods"
+      },
+      {
+        title: "Packaging materials on 1688",
+        category: "Packaging",
+        price: "Open 1688",
+        moq: "Search packaging",
+        supplier: "1688 category search",
+        tags: ["Bags", "Boxes"],
+        image: "https://images.unsplash.com/photo-1607344645866-009c320f6ab0?auto=format&fit=crop&w=700&q=80",
+        url: "https://s.1688.com/selloffer/offer_search.htm?keywords=packaging"
+      },
+      {
+        title: "Beauty and personal care on 1688",
+        category: "Beauty",
+        price: "Open 1688",
+        moq: "Search beauty",
+        supplier: "1688 category search",
+        tags: ["Cosmetics", "Tools"],
+        image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=700&q=80",
+        url: "https://s.1688.com/selloffer/offer_search.htm?keywords=beauty"
+      },
+      {
+        title: "Industrial supplies and tools on 1688",
+        category: "Industrial",
+        price: "Open 1688",
+        moq: "Search tools",
+        supplier: "1688 category search",
+        tags: ["Hardware", "Machines"],
+        image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=700&q=80",
+        url: "https://s.1688.com/selloffer/offer_search.htm?keywords=industrial%20tools"
+      },
+      {
+        title: "Sports and outdoor products on 1688",
+        category: "Outdoor",
+        price: "Open 1688",
+        moq: "Search outdoor",
+        supplier: "1688 category search",
+        tags: ["Fitness", "Outdoor"],
+        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=700&q=80",
+        url: "https://s.1688.com/selloffer/offer_search.htm?keywords=sports%20outdoor"
+      },
+      {
+        title: "Main 1688 homepage",
+        category: "all",
+        price: "Open 1688",
+        moq: "All products",
+        supplier: "1688.com",
+        tags: ["Homepage", "All categories"],
+        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=700&q=80",
+        url: "https://www.1688.com/"
+      }
+    ];
+
+    products = accessProducts;
+
     const productGrid = document.querySelector("#productGrid");
     const toast = document.querySelector("#toast");
     const cartCount = document.querySelector("#cartCount");
@@ -1227,10 +1317,11 @@
     const cartList = document.querySelector("#cartList");
     const customProductsKey = "custom1688Products";
     const cartKey = "cart1688Products";
+    const orderRequestsKey = "orderRequests1688";
     const seedProducts = products.map((product, index) => ({
       ...product,
       id: `seed-${index}`,
-      url: "https://www.1688.com/"
+      url: product.url || "https://www.1688.com/"
     }));
     let customProducts = loadFromStorage(customProductsKey, []);
     let cart = loadFromStorage(cartKey, []);
@@ -1259,6 +1350,11 @@
 
     function productById(id) {
       return products.find((product) => product.id === id);
+    }
+
+    function build1688SearchUrl(query) {
+      const term = query.trim() || "wholesale";
+      return `https://s.1688.com/selloffer/offer_search.htm?keywords=${encodeURIComponent(term)}`;
     }
 
     function showToast(message) {
@@ -1361,7 +1457,9 @@
     document.querySelector("#searchForm").addEventListener("submit", (event) => {
       event.preventDefault();
       const active = document.querySelector(".tab.active")?.dataset.category || "all";
-      renderProducts(active, document.querySelector("#searchInput").value);
+      const query = document.querySelector("#searchInput").value;
+      window.open(build1688SearchUrl(query), "_blank", "noopener");
+      renderProducts(active, query);
       document.querySelector("#products").scrollIntoView({ behavior: "smooth" });
     });
 
@@ -1391,7 +1489,7 @@
         moq: formData.get("moq").trim() || "MOQ on request",
         supplier: formData.get("supplier").trim() || "1688 supplier",
         tags: ["Added link", "Buyer item"],
-        image: formData.get("image").trim(),
+        image: formData.get("image").trim() || "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=700&q=80",
         url: formData.get("url").trim()
       };
 
@@ -1422,10 +1520,36 @@
       showToast("Product removed from cart");
     });
 
+    document.querySelector("#checkoutButton").addEventListener("click", () => {
+      if (!cart.length) {
+        showToast("Add at least one product first");
+        return;
+      }
+      const lines = cart.map((item) => {
+        const product = productById(item.id);
+        return product ? `Qty ${item.quantity}: ${product.title} - ${product.url}` : "";
+      }).filter(Boolean);
+      document.querySelector("textarea[name='request']").value = `I want help ordering and delivering these 1688 products:\n${lines.join("\n")}`;
+      cartDrawer.classList.remove("open");
+      document.querySelector("#quote").scrollIntoView({ behavior: "smooth" });
+      showToast("Cart added to order request");
+    });
+
     document.querySelector("#quoteForm").addEventListener("submit", (event) => {
       event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      const requests = loadFromStorage(orderRequestsKey, []);
+      requests.unshift({
+        id: `request-${Date.now()}`,
+        name: formData.get("name").trim(),
+        contact: formData.get("contact").trim(),
+        destination: formData.get("destination").trim(),
+        request: formData.get("request").trim(),
+        createdAt: new Date().toISOString()
+      });
+      saveToStorage(orderRequestsKey, requests);
       event.currentTarget.reset();
-      showToast("Quote request sent");
+      showToast("Order request saved");
     });
 
     renderProducts();

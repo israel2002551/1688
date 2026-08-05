@@ -1,6 +1,6 @@
-# 1688 Global
+# 1688 Sourcing & Delivery Help
 
-A standalone wholesale marketplace homepage inspired by 1688.
+A standalone sourcing gateway for 1688. Users can browse 1688 search/category links, paste desired 1688 product URLs, add optional images and notes, build an order cart, and submit an order-help request.
 
 ## Run
 
@@ -14,6 +14,16 @@ npx serve .
 
 ## Edit
 
-Product data is in the `products` array near the bottom of `index.html`. The page includes category filtering, search, quote request prefilling, a cart drawer, and a form where users can add new 1688 products by pasting a product link plus image URL.
+The page includes:
 
-User-added products and cart items are saved in browser `localStorage`, so they remain after a page refresh on the same device.
+- Header search that opens 1688 search results in a new tab.
+- 1688 access cards for common categories.
+- A product URL submission form for customer-requested products.
+- A cart drawer with links, images, quantities, and remove actions.
+- An order request form for delivery and sourcing help.
+
+User-added products, cart items, and submitted order requests are saved in browser `localStorage`, so they remain after a page refresh on the same device.
+
+## Note
+
+This static site cannot access every product on 1688 as a live inventory feed by itself. To submit orders to your team automatically, connect the request form to a backend, database, email service, or WhatsApp workflow.
